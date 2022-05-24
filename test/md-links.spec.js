@@ -1,13 +1,32 @@
 import { absoluteRoute, convertingToAbs, existRoute } from '../md-links.js';
-import { getListOfFiles, readEachFile } from '../md-links.js'
+import { readRoute, getListOfFiles, readEachFile } from '../md-links.js'
 
+jest.mock('cross-fetch')
+// jest.mock('chalk')
+
+const resultOfReadEachFile = [
+  {
+    file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
+    href: 'https://docs.npmjs.com/cli/install',
+    text: 'docs oficiales de `npm install` acá'
+  },
+  {
+    file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
+    href: 'https://github.com/Laboratoria/course-parser',
+    text: '`course-parser`'
+  },
+  {
+    file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
+    href: 'https://www.npmjs.com/package/jersabell-jersabell',
+    text: 'facebok face'
+  }
+]
 
 describe('mdLinks', () => {
   const absoluteRuteTest = 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents';
   const relativeRouteTest= './Documents'
   const routeFalse = './Documentsnotexisted'
-  const arrOfRuotes = ['C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\First Dir\\One\\readme.md',
-  'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md']
+  const arrOfRuotes = ['C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md']
   // testing absoluteRoute
   it('ruta absoluta es true', () => {
     expect(absoluteRoute(absoluteRuteTest)).toBe(true);
@@ -26,6 +45,10 @@ describe('mdLinks', () => {
   it('existe ruta es false', () => {
     expect(existRoute(routeFalse)).toBe(false)
   });
+  // funcion readRoute, Verifica la ruta, la convierte a absoluta y devulve la ruta si existe
+  it('devulve true: ruta existente en absoluta', () => {
+    expect(readRoute(relativeRouteTest)).toBe(absoluteRuteTest)
+  });
   // function getListOfFiles, que devuelve el array de rutas de archivos .md
   it('devuelve array de rutas', () => {
     expect(getListOfFiles(absoluteRuteTest)).toContain("C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\First Dir\\One\\readme.md")
@@ -33,8 +56,8 @@ describe('mdLinks', () => {
   it('devuelve un array vacío cuando el dir está vacío', () => {
     expect(getListOfFiles('C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\First Dir\\Two')).toEqual([])
   });
-  // function getListOfFiles, que devuelve el array de rutas de archivos .md --------->no funciona
-  // it('lee los archivos', () => {
-  //   expect(readEachFile(arrOfRuotes)).toEqual('Con el comando `npm install githubname/reponame` podemos instalar directamente')
-  // });
+  // function readEachFile, que devuelve el array de rutas de archivos .md --------->no funciona
+  it('lee los archivos', () => {
+    expect(readEachFile(arrOfRuotes)).toEqual(resultOfReadEachFile)
+  });
 });
