@@ -8,6 +8,9 @@
   "scripts": {
     "test": "jest --coverage"
   },
+  "bin":{
+    "md-links": "./cli.js"
+  },
   "jest": {
     "verbose": true,
     "transform": {

@@ -1,8 +1,12 @@
 import { absoluteRoute, convertingToAbs, existRoute } from '../md-links.js';
-import { readRoute, getListOfFiles, readEachFile } from '../md-links.js'
+import { readRoute, getListOfFiles, readEachFile, analizeLinks } from '../md-links.js'
 
-jest.mock('cross-fetch')
+
+// jest.mock('cross-fetch')
 // jest.mock('chalk')
+
+
+
 
 const resultOfReadEachFile = [
   {
@@ -22,11 +26,36 @@ const resultOfReadEachFile = [
   }
 ]
 
+const resultOfAnalizeLinks = [
+  {
+    file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
+    href: 'https://docs.npmjs.com/cli/install',
+    text: 'docs oficiales de `npm install` acá',
+    status: 200,
+    message: 'ok'
+  },
+  {
+    file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
+    href: 'https://github.com/Laboratoria/course-parser',
+    text: '`course-parser`',
+    status: 200,
+    message: 'ok'
+  },
+  {
+    file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
+    href: 'https://www.npmjs.com/package/jersabell-jersabell',
+    text: 'facebok face',
+    status: 404,
+    message: 'fail'
+  }
+]
+
 describe('mdLinks', () => {
   const absoluteRuteTest = 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents';
   const relativeRouteTest= './Documents'
   const routeFalse = './Documentsnotexisted'
   const arrOfRuotes = ['C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md']
+  const arrOfRuotesFalse = ['C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\First Dir\\empty.md']
   // testing absoluteRoute
   it('ruta absoluta es true', () => {
     expect(absoluteRoute(absoluteRuteTest)).toBe(true);
@@ -57,7 +86,16 @@ describe('mdLinks', () => {
     expect(getListOfFiles('C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\First Dir\\Two')).toEqual([])
   });
   // function readEachFile, que devuelve el array de rutas de archivos .md --------->no funciona
-  it('lee los archivos', () => {
+  it('devuelve array de objts con text, href y file', () => {
     expect(readEachFile(arrOfRuotes)).toEqual(resultOfReadEachFile)
+  });
+  it('devuelve array vacío', () => {
+    expect(readEachFile(arrOfRuotesFalse)).toEqual([])
+  });
+  // function analizeLinks
+  it('analiza links', () => {
+    analizeLinks(resultOfReadEachFile).then((res) => {
+    expect(res).toEqual(resultOfAnalizeLinks);
+    })
   });
 });

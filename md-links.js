@@ -36,7 +36,7 @@ const readFile = (route) => fs.readFileSync(route, 'utf8');
 //  Verifica la ruta, la convierte a absoluta y devulve la ruta si existe 
 export function readRoute (route) {
   const routeAbsolute = convertingToAbs(route);
-  const exist = existRoute(routeAbsolute) ? routeAbsolute : console.log('The path no exists.'); 
+  const exist = existRoute(routeAbsolute) ? routeAbsolute : false; 
 return exist
 };
 
@@ -50,10 +50,11 @@ export function getListOfFiles(route) {
     const files = readDir(route);
       files.forEach((file) => {
         const newRoute = path.join(route, file);
-        const reading = getListOfFiles(newRoute);  
+        const reading = getListOfFiles(newRoute); 
         arrOfFiles = reading.concat(arrOfFiles)
     })
   }
+  // console.log('array de rutas de archivos .md', arrOfFiles)
   return arrOfFiles
 }
 // console.log(getListOfFiles('./Documents'))
@@ -83,7 +84,7 @@ export function readEachFile(filesArr){
           });
         });
       } else {
-        console.log('no se encontró links');
+        console.log(file, 'no se encontró links');
       }
     });
     return dataOfLinks;
