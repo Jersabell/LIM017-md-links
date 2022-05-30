@@ -1,11 +1,9 @@
 import { absoluteRoute, convertingToAbs, existRoute } from '../md-links.js';
-import { readRoute, getListOfFiles, readEachFile, analizeLinks } from '../md-links.js'
+import { readRoute, getListOfFiles, readEachFile, analizeLinks, stat } from '../md-links.js'
 
 
-// jest.mock('cross-fetch')
+jest.mock('cross-fetch')
 // jest.mock('chalk')
-
-
 
 
 const resultOfReadEachFile = [
@@ -26,27 +24,31 @@ const resultOfReadEachFile = [
   }
 ]
 
+
 const resultOfAnalizeLinks = [
   {
     file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
     href: 'https://docs.npmjs.com/cli/install',
     text: 'docs oficiales de `npm install` acá',
     status: 200,
-    message: 'ok'
+    message: 'ok',
+    icon: '✔'
   },
   {
     file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
     href: 'https://github.com/Laboratoria/course-parser',
     text: '`course-parser`',
     status: 200,
-    message: 'ok'
+    message: 'ok',
+    icon:  '✔'
   },
   {
     file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
     href: 'https://www.npmjs.com/package/jersabell-jersabell',
     text: 'facebok face',
     status: 404,
-    message: 'fail'
+    message: 'fail',
+    icon: '✖'
   }
 ]
 
@@ -93,9 +95,14 @@ describe('mdLinks', () => {
     expect(readEachFile(arrOfRuotesFalse)).toEqual([])
   });
   // function analizeLinks
-  it('analiza links', () => {
-    analizeLinks(resultOfReadEachFile).then((res) => {
-    expect(res).toEqual(resultOfAnalizeLinks);
+  // it('analiza links', () => {
+  //   analizeLinks(resultOfReadEachFile).then((res) => {
+  //   expect(stat(resultOfReadEachFile)).toEqual(resultOfAnalizeLinks);
+  //   })
+  // });
+  // function stat
+  it('devuelve el conteo de los links', () => {
+    expect(stat(resultOfAnalizeLinks)).toEqual({Total: 3, Unique: 3, Broken: 1});
+    expect(stat(resultOfReadEachFile)).toEqual({Total: 3, Unique: 3});
     })
-  });
 });

@@ -4,9 +4,6 @@ import fs from 'fs'
 import path from 'path'
 // librería fetch
 import fetch from 'cross-fetch';
-// librría chalk
-// import chalk from 'chalk';
-
 
 // comprueba si la ruta es absoluta
 export const absoluteRoute = (route) => path.isAbsolute(route);
@@ -37,7 +34,7 @@ const readFile = (route) => fs.readFileSync(route, 'utf8');
 export function readRoute (route) {
   const routeAbsolute = convertingToAbs(route);
   const exist = existRoute(routeAbsolute) ? routeAbsolute : false; 
-return exist
+  return exist
 };
 
 // Devuelve array de rutas de archivos .md
@@ -54,20 +51,11 @@ export function getListOfFiles(route) {
         arrOfFiles = reading.concat(arrOfFiles)
     })
   }
-  // console.log('array de rutas de archivos .md', arrOfFiles)
   return arrOfFiles
 }
-// console.log(getListOfFiles('./Documents'))
 
 // función que lee cada archivo y devulve un array de objetos de tres propiedades
-// const filesArr = [
-//   'C:/Users/USUARIO/Documents/Jersabell/Proyectos/LIM017-md-links/Documents/refers.md',
-//   'C:/Users/USUARIO/Documents/Jersabell/Proyectos/LIM017-md-links/Documents/new-file/fff.md'
-// ]
 export function readEachFile(filesArr){
-    // const arr = filesArr.length
-    // if(!arr) {return false}
-    
     let dataOfLinks= []
     filesArr.forEach((file) =>{
       const regularExpression = /\[.*\]\((\s+)?(https?:\/\/)(.*?)\)/g;
@@ -84,18 +72,13 @@ export function readEachFile(filesArr){
           });
         });
       } else {
-        console.log(file, 'no se encontró links');
+        console.log(file, `No links found`);
       }
     });
     return dataOfLinks;
   };
 
-// console.log(readEachFile(filesArr))
-
-
-
 // función fetch para links devulve un array de objetos con 5 propiedades
-
 export function analizeLinks(dataLinks){
   const arrOfPromises = dataLinks.map((obj) => {
     return fetch(obj.href)
@@ -103,33 +86,46 @@ export function analizeLinks(dataLinks){
       if (res.status >= 400) {
         obj.status = res.status
         obj.message = 'fail'
+        obj.icon = '✖'
       }
       else if (res.status >= 200 && res.status < 400) {
         obj.status = res.status
         obj.message = 'ok'
-      }
+        obj.icon = '✔'
+      } 
       return obj
     })
     .catch(err => {
-      console.error(err, obj.href);
+      console.error(`⚠️  Error found in: ${obj.file}`, err.message);
     })
   })
   return Promise.all(arrOfPromises)
 }
-// analizeLinks(readEachFile(filesArr)).then((res) => console.log(res));
 
 
+// stat recibe el objeto y hace estadísticas 
+export function stat(arrofObjts){
+  const elemts = arrofObjts.map(objt=>objt.status)
+  for(let i = 0; i<elemts.length; i++){
+      if(elemts[i] !== undefined){
+          const links = arrofObjts.map((objt) => objt.href)
+          const linksTotal = links.length;
+          const arrLinksUnique = [...new Set(links)];
+          const linksUnique = arrLinksUnique.length;
+          const newArr = elemts.filter((status) => status > 399)
+          const broquenLinks = newArr.length
+          const toConsole = {Total: linksTotal, Unique: linksUnique, Broken: broquenLinks};
+          return toConsole
+      }
+      const links = arrofObjts.map((objt) => objt.href)
+      const linksTotal = links.length;
+      const arrLinksUnique = [...new Set(links)];
+      const linksUnique = arrLinksUnique.length;
+      const toConsole = {Total: linksTotal, Unique: linksUnique};
+      return toConsole
+  }
+}
 
-
-
-  // console.log(chalk.bgMagenta('Hello world!'));
-  // console.log(chalk.underline('delineado'))
-  // console.log(chalk.blue('Hello', 'World!', 'Foo', 'bar', 'biz', 'baz'))
-  // console.log((`
-  // CPU: ${chalk.red('90%')}
-  // RAM: ${chalk.green('40%')}
-  // DISK: ${chalk.yellow('70%')}
-  // `))
 
 // function getLinkChecked(link){
 //   const strg = link
@@ -141,6 +137,4 @@ export function analizeLinks(dataLinks){
 // console.log('no hay links')
 // }
 // console.log(getLinkTrue('     https://nodejs.org/api/path.html    '))
-
-
 
