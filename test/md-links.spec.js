@@ -1,9 +1,14 @@
 import { absoluteRoute, convertingToAbs, existRoute } from '../md-links.js';
 import { readRoute, getListOfFiles, readEachFile, analizeLinks, stat } from '../md-links.js'
 
-
-jest.mock('cross-fetch')
-// jest.mock('chalk')
+import fetch from 'cross-fetch';
+jest.mock('cross-fetch', () => {
+  //Mock the default export
+  return {
+    __esModule: true,
+    default: jest.fn()
+  };
+});
 
 
 const resultOfReadEachFile = [
@@ -23,7 +28,6 @@ const resultOfReadEachFile = [
     text: 'facebok face'
   }
 ]
-
 
 const resultOfAnalizeLinks = [
   {
@@ -95,14 +99,47 @@ describe('mdLinks', () => {
     expect(readEachFile(arrOfRuotesFalse)).toEqual([])
   });
   // function analizeLinks
-  // it('analiza links', () => {
-  //   analizeLinks(resultOfReadEachFile).then((res) => {
-  //   expect(stat(resultOfReadEachFile)).toEqual(resultOfAnalizeLinks);
-  //   })
-  // });
+  it('true: link con status 200', () => {
+    
+    fetch.mockResolvedValue({status: 200})
+    analizeLinks([{
+      file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
+      href: 'https://docs.npmjs.com/cli/install',
+      text: 'docs oficiales de `npm install` acá'
+    }]).then((data) => {
+      expect(data).toEqual([{
+        file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
+        href: 'https://docs.npmjs.com/cli/install',
+        text: 'docs oficiales de `npm install` acá',
+        status: 200,
+        message: 'ok',
+        icon: '✔'
+      }])
+    })
+  })
+  it('true: link con status 404', () => {
+    fetch.mockResolvedValue({status: 404})
+    analizeLinks([{
+      file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
+      href: 'https://docs.npmjs.com/cli/install',
+      text: 'docs oficiales de `npm install` acá'
+    }]).then((data) => {
+      expect(data).toEqual([{
+        file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
+        href: 'https://docs.npmjs.com/cli/install',
+        text: 'docs oficiales de `npm install` acá',
+        status: 404,
+        message: 'fail',
+        icon: '✖'
+      }])
+    })
+  })
   // function stat
   it('devuelve el conteo de los links', () => {
     expect(stat(resultOfAnalizeLinks)).toEqual({Total: 3, Unique: 3, Broken: 1});
     expect(stat(resultOfReadEachFile)).toEqual({Total: 3, Unique: 3});
     })
 });
+
+
+
