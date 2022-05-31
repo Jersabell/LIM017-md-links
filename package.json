@@ -1,13 +1,33 @@
 {
-  "name": "md-links",
+  "name": "jersabell-md-links",
   "version": "0.1.0",
   "engines": {
     "node": ">=14.x"
   },
+  "description": "md-links es una librería que analiza archivos en formato Markdown y verifica si contiene links. De ser así, muestra su estado si son válidos o no, y cuenta el total de links, los que son únicos y los que están rotos.",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "jest --coverage"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jersabell/LIM017-md-links"
+  },
+  "keywords": [
+  "markdown",
+  "md-links",
+  "node",
+  "CLI",
+  "recursive"
+  ],
+  "author": "Jersabell Tineo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jersabell/LIM017-md-links"
+  },
+  "homepage": "https://github.com/Jersabell/LIM017-md-links",
+
   "bin":{
     "md-links": "./cli.js"
   },

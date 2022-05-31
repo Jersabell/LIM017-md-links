@@ -71,18 +71,19 @@ export function readEachFile(filesArr){
             text: data.match(text) !== null ? data.match(text).toString().slice(1, -1).slice(0, 50) : 'Text not found',
           });
         });
-      } else {
-        console.log(file, `No links found`);
-      }
+      } 
     });
     return dataOfLinks;
   };
+//   const probando= readEachFile(["C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\new-file\\fff.md"]);
+// if(probando.length){console.log('yes')} else {console.log('no')}
 
 // función fetch para links devulve un array de objetos con 5 propiedades
 export function analizeLinks(dataLinks){
   const arrOfPromises = dataLinks.map((obj) => {
     return fetch(obj.href)
     .then(res => {
+      // console.log('aaa', obj.href, res.status)
       if (res.status >= 400) {
         obj.status = res.status
         obj.message = 'fail'
@@ -95,13 +96,18 @@ export function analizeLinks(dataLinks){
       } 
       return obj
     })
-    .catch(err => {
-      console.error(`⚠️  Error found in: ${obj.file}`, err.message);
-    })
+    .catch((err) => {
+      {
+        obj.icon ='✖',
+        obj.status= 404,
+        obj.message = 'fatal error⚠️ '
+        // obj.error =` Error: ${err.message}`
+      }
+      return obj}
+    )
   })
   return Promise.all(arrOfPromises)
 }
-
 
 // stat recibe el objeto y hace estadísticas 
 export function stat(arrofObjts){
@@ -127,6 +133,7 @@ export function stat(arrofObjts){
 }
 
 
+
 // function getLinkChecked(link){
 //   const strg = link
 // // const strg = '     https://nodejs.org/api/path.html    '
@@ -138,3 +145,16 @@ export function stat(arrofObjts){
 // }
 // console.log(getLinkTrue('     https://nodejs.org/api/path.html    '))
 
+// fetch('http://community.laboratoria.la/c/js')
+//   .then(res => {
+//     if (res.status >= 400) {
+//       throw new Error("Bad response from server");
+//     }
+//     return res;
+//   })
+//   .then(user => {
+//     console.log(user);
+//   })
+//   .catch(err => {
+//     console.error(err);
+//   });

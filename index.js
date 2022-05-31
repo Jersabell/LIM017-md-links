@@ -8,7 +8,12 @@ export const mdLinks = (path, options) => {
       const array = getListOfFiles(ruteChecked)
       if(array.length){
         const fileChecked = readEachFile(array)
+        if (fileChecked.length){
         options.validate ? resolve(analizeLinks(fileChecked)) : resolve(fileChecked)
+        }
+        else{
+          reject(new Error('No se encontraron links'))
+        }
       } else {
         reject(new Error('No .md files to analyze'))
       }
@@ -17,5 +22,5 @@ export const mdLinks = (path, options) => {
   })
 }
 
-// mdLinks('./Documents', 'validate').then((res) => console.log(res)).catch((err) => console.log('algo anda mal ;V'))
+// mdLinks('./Documents', {validate: true}).then((res) => console.log(res)).catch((err) => console.log('algo anda mal ;V'))
 // mdLinks('./Documents/refers.md', {validate: false}).then((res) => console.log(res)).catch((err) => console.log(err))

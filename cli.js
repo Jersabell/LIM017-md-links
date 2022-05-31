@@ -8,7 +8,12 @@ import { stat } from './md-links.js';
 // Resultado en la consola:
 function showConsoleToValidate(arrofObjts){
     return arrofObjts.forEach((obj) => {
-        if(obj.status && obj.message && obj.status<400){
+        // console.log('objeto aqui', obj)
+        if(obj.error){
+            const final = `${chalk.bold.hex('#ff0000')(obj.icon)} ${chalk.rgb(227, 255, 144)(obj.file)} ${chalk.rgb(190, 239, 255)(obj.href)} ${chalk.rgb(52, 187, 233)(obj.text)} ${chalk.hex('#ff0000')(obj.status)} ${chalk.red(obj.error)} `
+            return console.log(final)
+        }
+        else if(obj.status && obj.message && obj.status<400){
             const final = `${chalk.bold.rgb(0, 187, 45)(obj.icon)} ${chalk.rgb(227, 255, 144)(obj.file)} ${chalk.rgb(190, 239, 255)(obj.href)} ${chalk.green(obj.message)} ${chalk.rgb(0, 187, 45)(obj.status)} ${chalk.rgb(52, 187, 233)(obj.text)}`
             return console.log(final)
         }
