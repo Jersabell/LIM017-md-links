@@ -15,11 +15,11 @@
     "url": "git+https://github.com/Jersabell/LIM017-md-links"
   },
   "keywords": [
-  "markdown",
-  "md-links",
-  "node",
-  "CLI",
-  "recursive"
+    "markdown",
+    "md-links",
+    "node",
+    "CLI",
+    "recursive"
   ],
   "author": "Jersabell Tineo",
   "license": "ISC",
@@ -27,8 +27,7 @@
     "url": "https://github.com/Jersabell/LIM017-md-links"
   },
   "homepage": "https://github.com/Jersabell/LIM017-md-links",
-
-  "bin":{
+  "bin": {
     "md-links": "./cli.js"
   },
   "jest": {
@@ -40,6 +39,10 @@
   "devDependencies": {
     "@babel/preset-env": "^7.18.0",
     "babel-jest": "^28.1.0",
+    "eslint": "^8.16.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.4.6",
     "jest": "^28.1.0"
   },
   "dependencies": {
