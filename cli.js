@@ -27,8 +27,8 @@ function showConsoleToValidate(arrofObjts) {
 const path = process.argv[2];
 const option1 = process.argv[3];
 const option2 = process.argv[4];
-// eslint-disable-next-line no-unused-vars
-const [a, b, ...options] = process.argv;
+
+const [...options] = process.argv;
 
 if (options.includes('--validate') && !option2) {
   mdLinks(path, { validate: true })

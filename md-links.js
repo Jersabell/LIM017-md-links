@@ -92,7 +92,6 @@ export function analizeLinks(dataLinks) {
       return obj;
     })
     .catch(() => {
-      // eslint-disable-next-line no-unused-expressions
       obj.icon = '✖';
       obj.status = 'Status no found';
       obj.message = 'fatal error⚠️ ';
@@ -102,88 +101,18 @@ export function analizeLinks(dataLinks) {
 }
 
 // stat recibe el objeto y hace estadísticas
-// eslint-disable-next-line consistent-return
 export function stat(arrofObjts) {
-  const elemts = arrofObjts.map((objt) => objt.status);
-  // eslint-disable-next-line no-unreachable-loop
-  for (let i = 0; i < elemts.length; i + 1) {
-    if (elemts[i] !== undefined) {
-      const links = arrofObjts.map((objt) => objt.href);
-      const linksTotal = links.length;
-      const arrLinksUnique = [...new Set(links)];
-      const linksUnique = arrLinksUnique.length;
-      const newArr = elemts.filter((status) => status > 399);
-      const broquenLinks = newArr.length;
-      const toConsole = { Total: linksTotal, Unique: linksUnique, Broken: broquenLinks };
-      return toConsole;
-    }
-    const links = arrofObjts.map((objt) => objt.href);
-    const linksTotal = links.length;
-    const arrLinksUnique = [...new Set(links)];
-    const linksUnique = arrLinksUnique.length;
-    const toConsole = { Total: linksTotal, Unique: linksUnique };
+  const links = arrofObjts.map((objt) => objt.href);
+  const linksTotal = links.length;
+  const arrLinksUnique = [...new Set(links)];
+  const linksUnique = arrLinksUnique.length;
+  const elemts = arrofObjts.filter((objt) => objt.status); // cuando val:false, es un array vacío
+  if (elemts.length > 0) {
+    const newArr = arrofObjts.filter((obj) => obj.message !== 'ok');
+    const broquenLinks = newArr.length;
+    const toConsole = { Total: linksTotal, Unique: linksUnique, Broken: broquenLinks };
     return toConsole;
   }
+  const toConsole = { Total: linksTotal, Unique: linksUnique };
+  return toConsole;
 }
-const resultOfReadEachFile = [
-  {
-    file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
-    href: 'https://docs.npmjs.com/cli/install',
-    text: 'docs oficiales de `npm install` acá',
-  },
-  {
-    file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
-    href: 'https://github.com/Laboratoria/course-parser',
-    text: '`course-parser`',
-  },
-  {
-    file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
-    href: 'https://www.npmjs.com/package/jersabell-jersabell',
-    text: 'facebok face',
-  },
-  {
-    file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
-    href: 'http://community.laboratoria.la/c/js',
-    text: 'labo fail0',
-  },
-];
-
-const resultOfAnalizeLinks = [
-  {
-    file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
-    href: 'https://docs.npmjs.com/cli/install',
-    text: 'docs oficiales de `npm install` acá',
-    status: 200,
-    message: 'ok',
-    icon: '✔',
-  },
-  {
-    file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
-    href: 'https://github.com/Laboratoria/course-parser',
-    text: '`course-parser`',
-    status: 200,
-    message: 'ok',
-    icon: '✔',
-  },
-  {
-    file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
-    href: 'https://www.npmjs.com/package/jersabell-jersabell',
-    text: 'facebok face',
-    status: 404,
-    message: 'fail',
-    icon: '✖',
-  },
-  {
-    file: 'C:\\Users\\USUARIO\\Documents\\Jersabell\\Proyectos\\LIM017-md-links\\Documents\\refers.md',
-    href: 'https://www.npmjs.com/package/jersabelld-jersabelld',
-    text: 'facebok new',
-    status: 'Status no found',
-    message: 'fatal error⚠️ ',
-    icon: '✖',
-  },
-];
-stat(resultOfAnalizeLinks);
-// const aaa = [undefined, undefined, undefined];
-// if (aaa !== undefined) {
-//   console.log('aaaaaaaaaaaaaaaaaa');
-// } else { console.log('-.-'); }
