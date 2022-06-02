@@ -16,7 +16,7 @@
 ### ¿Qué es Markdown Links? 🔗
 Es una librería que analiza archivos en formato Markdown (.md) y verifica si contiene links. De ser así, muestra su estado 200 (ok), 404 (fail) o status no encontrado (fatal error). También cuenta el total de links, los que son únicos y los que están rotos.
 
-🇲🇩 Aquí [link de acceso]() al package de npm.
+🇲🇩 Aquí [link de acceso](https://www.npmjs.com/package/md-links-jersabell) al package de npm.
 
 ## 2. Instalación ⚙️
 Para utilizar Markdown Links debes tener instalado [Node.js](https://nodejs.org/en/) de forma previa. Luego debes ejecutar el siguiente comando en la terminal:
