@@ -13,7 +13,7 @@
 
 ## 1. Markdown Links
 
-## ¿Qué es Markdown Links? 🔗
+### ¿Qué es Markdown Links? 🔗
 Es una librería que analiza archivos en formato Markdown (.md) y verifica si contiene links. De ser así, muestra su estado 200 (ok), 404 (fail) o status no encontrado (fatal error). También cuenta el total de links, los que son únicos y los que están rotos.
 
 🇲🇩 Aquí [link de acceso]() al package de npm.
