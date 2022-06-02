@@ -1,7 +1,52 @@
 {
-  "name": "md-links",
+  "name": "jersabell-md-links",
   "version": "0.1.0",
   "engines": {
     "node": ">=14.x"
+  },
+  "description": "md-links es una librería que analiza archivos en formato Markdown y verifica si contiene links. De ser así, muestra su estado si son válidos o no, y cuenta el total de links, los que son únicos y los que están rotos.",
+  "main": "./src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jersabell/LIM017-md-links"
+  },
+  "keywords": [
+    "markdown",
+    "md-links",
+    "node",
+    "CLI",
+    "recursive"
+  ],
+  "author": "Jersabell Tineo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jersabell/LIM017-md-links"
+  },
+  "homepage": "https://github.com/Jersabell/LIM017-md-links",
+  "bin": {
+    "md-links": "./src/cli.js"
+  },
+  "jest": {
+    "verbose": true,
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.18.0",
+    "babel-jest": "^28.1.0",
+    "eslint": "^8.16.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.4.6",
+    "jest": "^28.1.0"
+  },
+  "dependencies": {
+    "chalk": "^5.0.1",
+    "cross-fetch": "^3.1.5"
   }
 }
