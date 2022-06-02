@@ -5,7 +5,7 @@
     "node": ">=14.x"
   },
   "description": "md-links es una librería que analiza archivos en formato Markdown y verifica si contiene links. De ser así, muestra su estado si son válidos o no, y cuenta el total de links, los que son únicos y los que están rotos.",
-  "main": "index.js",
+  "main": "./src/index.js",
   "type": "module",
   "scripts": {
     "test": "jest --coverage"
@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/Jersabell/LIM017-md-links",
   "bin": {
-    "md-links": "./cli.js"
+    "md-links": "./src/cli.js"
   },
   "jest": {
     "verbose": true,
